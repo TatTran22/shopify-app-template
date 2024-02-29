@@ -1,0 +1,28 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "a5d57112a6e911de9436420f4ec043fc"
+name = "example-app"
+application_url = "https://portland-samsung-mark-democrat.trycloudflare.com"
+embedded = true
+
+[build]
+automatically_update_urls_on_dev = true
+dev_store_url = "quickstart-d2ac9c66.myshopify.com"
+include_config_on_deploy = true
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "read_products,write_products"
+
+[auth]
+redirect_urls = [
+    "https://portland-samsung-mark-democrat.trycloudflare.com/auth/callback",
+    "https://portland-samsung-mark-democrat.trycloudflare.com/auth/shopify/callback",
+    "https://portland-samsung-mark-democrat.trycloudflare.com/api/auth/callback"
+]
+
+[webhooks]
+api_version = "2024-01"
+
+[pos]
+embedded = false

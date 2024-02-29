@@ -1,38 +1,20 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+Route::get('/', [HomeController::class, 'index']);
+
+Route::fallback([\App\Http\Controllers\ShopifyController::class, 'fallback'])->middleware('shopify.installed');
+
+Route::prefix('/api')->group(function () {
+    Route::get('/auth', [\App\Http\Controllers\ShopifyController::class, 'auth']);
+    Route::get('/auth/callback', [\App\Http\Controllers\ShopifyController::class, 'authCallback']);
+    Route::get('/webhooks', [\App\Http\Controllers\ShopifyController::class, 'authCallback']);
+
+    Route::prefix('/products')->middleware('shopify.auth')->group(function () {
+        Route::get('/count', [\App\Http\Controllers\ProductController::class, 'count']);
+        Route::get('/create', [\App\Http\Controllers\ProductController::class, 'create']);
+    });
 });
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-
-require __DIR__.'/auth.php';
