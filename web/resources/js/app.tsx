@@ -11,7 +11,7 @@ import { initI18n } from '@/utils/i18nUtils'
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel'
 
-void createInertiaApp({
+createInertiaApp({
   title: (title) => `${title} - ${appName}`,
   resolve: (name) => resolvePageComponent(`./pages/${name}.tsx`, import.meta.glob('./pages/**/*.tsx')),
   setup({ el, App, props }) {

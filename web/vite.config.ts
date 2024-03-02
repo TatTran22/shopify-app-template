@@ -5,7 +5,6 @@ import { fileURLToPath } from 'url'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  // @ts-ignore
   root: dirname(fileURLToPath(import.meta.url)),
   plugins: [
     laravel({

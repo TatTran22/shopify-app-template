@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\ShopifyProductCreatorException;
-use App\Http\Requests\ProfileUpdateRequest;
 use App\Lib\ProductCreator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
